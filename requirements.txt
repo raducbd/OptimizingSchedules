@@ -1,0 +1,9 @@
+pytest
+pytest-cov
+pylint
+black
+ortools==9.4.1874
+pandas==1.3.5
+numpy==1.23.2
+streamlit
+altair
