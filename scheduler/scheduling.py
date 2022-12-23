@@ -204,7 +204,7 @@ class Scheduler(object):
 
         results = pd.DataFrame()
         for job_id, job in self._jobs.items():
-            task_df = pd.DataFrame([task.__dict for task in job.tasks])
+            task_df = pd.DataFrame([task.__dict__ for task in job.tasks])
             task_df["job_id"] = job_id
             task_df["id"] = task_df["id"].apply(lambda x: f"job({job_id}, {x})")
             task_df["machine"] = task_df["machine"].apply(lambda x: f"Machine #{x}")
