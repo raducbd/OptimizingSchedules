@@ -7,9 +7,9 @@ import matplotlib.pyplot as plt
 from typing import Dict, List
 from ortools.sat.python import cp_model
 
-from manufacturing import Job, Task
-from utils.logging import logger
-from utils.errors import SolverUnsuccessful, ModelNotFitted
+from scheduler.manufacturing import Job, Task
+from scheduler.utils.logging import logger
+from scheduler.utils.errors import SolverUnsuccessful, ModelNotFitted
 
 
 class Scheduler(object):
