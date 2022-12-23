@@ -6,7 +6,7 @@ from ortools.sat.python import cp_model
 @dataclass
 class Task:
     """Class for identifying a task in a given job.
-    
+
     Args:
         id (int): Task unique identifier
         machine (int): Machine ID where task runs

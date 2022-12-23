@@ -7,7 +7,7 @@ from scheduler.manufacturing.task import Task
 @dataclass
 class Job:
     """Class for identifying a job and its associated tasks.
-    
+
     Args:
         id (int): Job unique identifier
         tasks (List[Task]): List of all tasks required for the job to run completely
