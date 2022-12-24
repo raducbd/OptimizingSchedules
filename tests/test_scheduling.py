@@ -18,17 +18,17 @@ class TestScheduler(object):
                 0: Job(
                     id=0,
                     tasks=[
-                        Task(id=0, machine=1, duration=2),
-                        Task(id=1, machine=2, duration=2),
-                        Task(id=2, machine=3, duration=2),
+                        Task(id=0, name="0", machine=1, duration=2),
+                        Task(id=1, name="1", machine=2, duration=2),
+                        Task(id=2, name="2", machine=3, duration=2),
                     ],
                 ),
                 1: Job(
                     id=1,
                     tasks=[
-                        Task(id=0, machine=3, duration=2),
-                        Task(id=1, machine=2, duration=2),
-                        Task(id=2, machine=1, duration=2),
+                        Task(id=0, name="0", machine=3, duration=2),
+                        Task(id=1, name="1", machine=2, duration=2),
+                        Task(id=2, name="2", machine=1, duration=2),
                     ],
                 ),
             },

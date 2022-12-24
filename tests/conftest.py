@@ -15,7 +15,7 @@ def task_example() -> Task:
     Returns:
         Task: Mocked task example for testing.
     """
-    return Task(id=99, machine=20, duration=21)
+    return Task(id=99, name="sep", machine=20, duration=21)
 
 
 @pytest.fixture(scope="module")
@@ -25,7 +25,10 @@ def job_example() -> Job:
     Returns:
         Job: Mocked job example for testing.
     """
-    return Job(id=99, tasks=[Task(id=99, machine=20, duration=21) for _ in range(2)])
+    return Job(
+        id=99,
+        tasks=[Task(id=99, name="sep", machine=20, duration=21) for _ in range(2)],
+    )
 
 
 @pytest.fixture(scope="module")
@@ -40,17 +43,17 @@ def scheduler_example() -> Scheduler:
             Job(
                 id=0,
                 tasks=[
-                    Task(id=0, machine=1, duration=2),
-                    Task(id=1, machine=2, duration=2),
-                    Task(id=2, machine=3, duration=2),
+                    Task(id=0, name="0", machine=1, duration=2),
+                    Task(id=1, name="1", machine=2, duration=2),
+                    Task(id=2, name="2", machine=3, duration=2),
                 ],
             ),
             Job(
                 id=1,
                 tasks=[
-                    Task(id=0, machine=3, duration=2),
-                    Task(id=1, machine=2, duration=2),
-                    Task(id=2, machine=1, duration=2),
+                    Task(id=0, name="0", machine=3, duration=2),
+                    Task(id=1, name="1", machine=2, duration=2),
+                    Task(id=2, name="2", machine=1, duration=2),
                 ],
             ),
         ]

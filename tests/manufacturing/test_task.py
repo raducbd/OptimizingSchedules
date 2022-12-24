@@ -9,6 +9,7 @@ class TestTask(object):
         # EXPECTED
         expected = {
             "id": 99,
+            "name": "sep",
             "machine": 20,
             "duration": 21,
             "start": None,
