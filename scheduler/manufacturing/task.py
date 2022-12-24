@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Optional, Union
 from dataclasses import dataclass
 from ortools.sat.python import cp_model
 
@@ -17,8 +17,12 @@ class Task:
     """
 
     id: int
-    machine: int
+    name: str
+    machine: Union[int, str]
     duration: int
     start: Optional[cp_model.IntVar] = None
     end: Optional[cp_model.IntVar] = None
     interval: Optional[cp_model.IntervalVar] = None
+
+    def __str__(self) -> str:
+        return f"{self.name} ({self.duration}h)"
