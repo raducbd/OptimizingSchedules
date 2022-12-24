@@ -1,12 +1,16 @@
 import streamlit as st
 from datetime import datetime, timedelta
 import pandas as pd
+import numpy as np
 
 from scheduler import Scheduler
 from scheduler.manufacturing import Task, Job
 
 MACHINES = ["E-101", "T-301", "R-201"]
-TASKS = []
+if "TASKS" not in st.session_state:
+    st.session_state["TASKS"] = []
+if "JOBS" not in st.session_state:
+    st.session_state["JOBS"] = []
 
 st.set_page_config(
     page_title="Scheduler", page_icon="🗓", layout="wide", initial_sidebar_state="auto"
@@ -55,11 +59,35 @@ with st.sidebar:
         # Every form must have a submit button.
         submitted = st.form_submit_button("Add Task")
         if submitted:
-            TASKS.append(
+            st.session_state["TASKS"].append(
                 Task(
-                    id=len(TASKS),
+                    id=len(st.session_state["TASKS"]),
                     name=task_name,
                     machine=machine,
                     duration=int(duration),
+                )
+            )
+
+# MAIN APP
+### ADD JOBS
+n_jobs = st.selectbox(label="Number of Jobs", options=np.arange(start=0, stop=6))
+
+if n_jobs > 0:
+    cols = st.columns(int(n_jobs))
+    for i, col in enumerate(cols):
+        with col:
+            job_name = st.text_input("Unique Name", value="HDPE", key=f"name_{i}")
+            job_tasks = st.multiselect(
+                label="Tasks (Follow logical order)",
+                options=st.session_state["TASKS"],
+                key=f"tasks_{i}",
+            )
+
+    if st.button(label="Add Jobs"):
+        for i in range(n_jobs):
+            st.session_state["JOBS"].append(
+                Job(
+                    id=len(st.session_state["JOBS"]),
+                    tasks=st.session_state[f"tasks_{i}"],
                 )
             )
