@@ -43,7 +43,7 @@ def scheduler_example() -> Scheduler:
         jobs=[
             Job(
                 id=0,
-                name="sep",
+                name="sep1",
                 tasks=[
                     Task(id=0, name="0", machine=1, duration=2),
                     Task(id=1, name="1", machine=2, duration=2),
@@ -52,7 +52,7 @@ def scheduler_example() -> Scheduler:
             ),
             Job(
                 id=1,
-                name="sep",
+                name="sep2",
                 tasks=[
                     Task(id=0, name="0", machine=3, duration=2),
                     Task(id=1, name="1", machine=2, duration=2),
@@ -72,24 +72,24 @@ def results_example() -> pd.DataFrame:
     """
     return pd.DataFrame(
         {
-            "job_id": [0, 1, 0, 1, 1, 0],
-            "id": [
-                "job(0, 0)",
-                "job(1, 2)",
-                "job(0, 1)",
-                "job(1, 1)",
-                "job(1, 0)",
-                "job(0, 2)",
+            "Process": ["SEP1", "SEP2", "SEP1", "SEP2", "SEP2", "SEP1"],
+            "Task": [
+                "(SEP1, 0)",
+                "(SEP2, 2)",
+                "(SEP1, 1)",
+                "(SEP2, 1)",
+                "(SEP2, 0)",
+                "(SEP1, 2)",
             ],
-            "machine": [
-                "Machine #1",
-                "Machine #1",
-                "Machine #2",
-                "Machine #2",
-                "Machine #3",
-                "Machine #3",
+            "Machine": [
+                1,
+                1,
+                2,
+                2,
+                3,
+                3,
             ],
-            "start": [0, 6, 2, 4, 0, 4],
-            "end": [2, 8, 4, 6, 2, 6],
+            "Planned Start": [0, 6, 2, 4, 0, 4],
+            "Planned End": [2, 8, 4, 6, 2, 6],
         }
     )

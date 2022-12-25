@@ -17,7 +17,7 @@ class TestScheduler(object):
             "_jobs": {
                 0: Job(
                     id=0,
-                    name="sep",
+                    name="sep1",
                     tasks=[
                         Task(id=0, name="0", machine=1, duration=2),
                         Task(id=1, name="1", machine=2, duration=2),
@@ -26,7 +26,7 @@ class TestScheduler(object):
                 ),
                 1: Job(
                     id=1,
-                    name="sep",
+                    name="sep2",
                     tasks=[
                         Task(id=0, name="0", machine=3, duration=2),
                         Task(id=1, name="1", machine=2, duration=2),
@@ -69,6 +69,7 @@ class TestScheduler(object):
     ):
         # OUTPUT
         output = scheduler_example.fit().get_results()
+        print(output)
 
         # EXPECTED
         expected = results_example
