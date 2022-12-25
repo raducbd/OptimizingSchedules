@@ -7,7 +7,7 @@ class TestJob(object):
         output = job_example.__dict__
 
         # EXPECTED
-        expected = {"id": 99, "tasks": [task_example for _ in range(2)]}
+        expected = {"id": 99, "name": "sep", "tasks": [task_example for _ in range(2)]}
 
         # ASSERT
         assert output == expected

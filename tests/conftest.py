@@ -27,6 +27,7 @@ def job_example() -> Job:
     """
     return Job(
         id=99,
+        name="sep",
         tasks=[Task(id=99, name="sep", machine=20, duration=21) for _ in range(2)],
     )
 
@@ -42,6 +43,7 @@ def scheduler_example() -> Scheduler:
         jobs=[
             Job(
                 id=0,
+                name="sep",
                 tasks=[
                     Task(id=0, name="0", machine=1, duration=2),
                     Task(id=1, name="1", machine=2, duration=2),
@@ -50,6 +52,7 @@ def scheduler_example() -> Scheduler:
             ),
             Job(
                 id=1,
+                name="sep",
                 tasks=[
                     Task(id=0, name="0", machine=3, duration=2),
                     Task(id=1, name="1", machine=2, duration=2),

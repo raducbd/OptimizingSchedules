@@ -17,6 +17,7 @@ class TestScheduler(object):
             "_jobs": {
                 0: Job(
                     id=0,
+                    name="sep",
                     tasks=[
                         Task(id=0, name="0", machine=1, duration=2),
                         Task(id=1, name="1", machine=2, duration=2),
@@ -25,6 +26,7 @@ class TestScheduler(object):
                 ),
                 1: Job(
                     id=1,
+                    name="sep",
                     tasks=[
                         Task(id=0, name="0", machine=3, duration=2),
                         Task(id=1, name="1", machine=2, duration=2),
