@@ -1,10 +1,11 @@
 __all__ = ["Scheduler"]
 
 import collections
+from datetime import datetime, timedelta
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from typing import Dict, List
+from typing import Dict, Optional, List
 from ortools.sat.python import cp_model
 
 from scheduler.manufacturing import Job, Task
@@ -187,11 +188,12 @@ class Scheduler(object):
                 )
                 self._jobs[job_id].tasks[task_id] = task
 
-    def get_results(self, plot_gannt: bool = False) -> pd.DataFrame:
+    def get_results(self, plot_gannt: bool = False, start_date: Optional[datetime] = None) -> pd.DataFrame:
         """Method that generates a dataframe with the results obtained for every single task.
 
         Args:
             plot_gannt (bool, optional): Whether or not Gannt Chart should be displayed. Defaults to False.
+            start_date (datetime, optional): In case there is a start date, in order to build a proper schedule. Defaults to None.
 
         Raises:
             ModelNotFitted: If object hasn't been fitted yet, it is not possible to generate results.
@@ -203,11 +205,10 @@ class Scheduler(object):
             raise ModelNotFitted(f"Model not fitted yet.")
 
         results = pd.DataFrame()
-        for job_id, job in self._jobs.items():
+        for job in self._jobs.values():
             task_df = pd.DataFrame([task.__dict__ for task in job.tasks])
-            task_df["job_id"] = job_id
-            task_df["id"] = task_df["id"].apply(lambda x: f"job({job_id}, {x})")
-            task_df["machine"] = task_df["machine"].apply(lambda x: f"Machine #{x}")
+            task_df["job"] = job.name.upper()
+            task_df["id"] = task_df["name"].apply(lambda x: f"({job.name.upper()}, {x.upper()})")
             results = pd.concat([results, task_df], axis=0, ignore_index=True)
 
         results["start_num"] = results["start"] - results["start"].min()
@@ -217,9 +218,20 @@ class Scheduler(object):
         if plot_gannt:
             self._plot_gannt(results)
 
+        if start_date:
+            results["start"] = results["start"].apply(lambda x: start_date + timedelta(hours=x))
+            results["end"] = results["end"].apply(lambda x: start_date + timedelta(hours=x))
+
         return (
-            results.loc[:, ["job_id", "id", "machine", "start", "end"]]
-            .sort_values(by=["machine", "start"])
+            results.loc[:, ["job", "id", "machine", "start", "end"]]
+            .rename(columns={
+                "job": "Process",
+                "id": "Task",
+                "machine": "Machine",
+                "start": "Planned Start",
+                "end": "Planned End"
+            })
+            .sort_values(by=["Machine", "Planned Start"])
             .reset_index(drop=True)
         )
 
