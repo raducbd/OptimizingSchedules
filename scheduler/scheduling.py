@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from typing import Dict, Optional, List
+from typing import Dict, Optional, List, Union
 from ortools.sat.python import cp_model
 
 from scheduler.manufacturing import Job, Task
@@ -56,11 +56,11 @@ class Scheduler(object):
             self._model = cp_model.CpModel()
         return self._model
 
-    def _get_machine_to_intervals(self) -> Dict[int, List[int]]:
+    def _get_machine_to_intervals(self) -> Dict[Union[int, str], List[int]]:
         """Method to handle list of machine intervals as singleton
 
         Returns:
-            Dict[int, List[int]]: Dictionary with machine id as key and list of intervals as values
+            Dict[Union[int, str], List[int]]: Dictionary with machine as key and list of intervals as values
         """
         if not hasattr(self, "_machine_to_intervals"):
             self._machine_to_intervals = collections.defaultdict(list)
@@ -215,12 +215,12 @@ class Scheduler(object):
         results["end_num"] = results["end"] - results["start"].min()
         results["start_to_end"] = results["end_num"] - results["start_num"]
 
-        if plot_gannt:
-            self._plot_gannt(results)
-
         if start_date:
             results["start"] = results["start"].apply(lambda x: start_date + timedelta(hours=x))
             results["end"] = results["end"].apply(lambda x: start_date + timedelta(hours=x))
+
+        if plot_gannt:
+            self._plot_gannt(results)
 
         return (
             results.loc[:, ["job", "id", "machine", "start", "end"]]
@@ -239,8 +239,8 @@ class Scheduler(object):
         """Method to plot Gannt CHart once results dataframe is generated - a type of bar chart that illustrates a project schedule."""
         _, ax = plt.subplots(1, 1, figsize=(16, 6))
         labels = []
-        for job_id in df["job_id"].unique():
-            df_ = df[df["job_id"] == job_id]
+        for job_id in df["job"].unique():
+            df_ = df[df["job"] == job_id]
             labels += df_.id.values.tolist()
             ax.barh(
                 df_.machine,
