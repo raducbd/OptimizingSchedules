@@ -14,6 +14,7 @@ class Job:
     """
 
     id: int
+    name: str
     tasks: List[Task]
 
     @property
