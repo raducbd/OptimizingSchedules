@@ -74,12 +74,12 @@ def results_example() -> pd.DataFrame:
         {
             "Process": ["SEP1", "SEP2", "SEP1", "SEP2", "SEP2", "SEP1"],
             "Task": [
-                "(SEP1, 0)",
-                "(SEP2, 2)",
-                "(SEP1, 1)",
-                "(SEP2, 1)",
-                "(SEP2, 0)",
-                "(SEP1, 2)",
+                "0",
+                "2",
+                "1",
+                "1",
+                "0",
+                "2",
             ],
             "Machine": [
                 1,
