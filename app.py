@@ -37,7 +37,9 @@ def load_scheduler(jobs: List[Job]) -> Scheduler:
 
 
 @st.cache
-def load_data(scheduler: Scheduler, start_date: Optional[datetime] = None) -> pd.DataFrame:
+def load_data(
+    scheduler: Scheduler, start_date: Optional[datetime] = None
+) -> pd.DataFrame:
     """Function that returns final dataframe with results of the scheduler.
 
     Args:
@@ -49,6 +51,7 @@ def load_data(scheduler: Scheduler, start_date: Optional[datetime] = None) -> pd
     """
     return scheduler.fit().get_results(start_date=start_date)
 
+
 @st.cache
 def convert_df(df: pd.DataFrame) -> None:
     """Function that caches conversion of pandas.DataFrame to CSV file, in order to prevent computation on every rerun.
@@ -56,7 +59,7 @@ def convert_df(df: pd.DataFrame) -> None:
     Args:
         df (pd.DataFrame): Pandas DataFrame
     """
-    return df.to_csv().encode('utf-8')
+    return df.to_csv().encode("utf-8")
 
 
 # SIDEBAR DEFINITIONS
@@ -132,17 +135,25 @@ if n_jobs > 0:
 
             with st.container():
                 st.write("OPTIMIZATION FINAL RESULTS")
-                fig = px.timeline(results, x_start="Planned Start", x_end="Planned End", y="Process", color="Machine")
+                fig = px.timeline(
+                    results,
+                    x_start="Planned Start",
+                    x_end="Planned End",
+                    y="Machine",
+                    color="Process",
+                    text="Task"
+                )
                 fig.update_yaxes(autorange="reversed")
+                fig.update_layout(xaxis_title="Date/Time")
                 st.plotly_chart(fig, theme="streamlit", use_container_width=True)
-                
+
                 st.dataframe(results)
                 csv = convert_df(results)
                 st.download_button(
                     label="Download data as CSV",
                     data=csv,
-                    file_name='results.csv',
-                    mime='text/csv',
+                    file_name="results.csv",
+                    mime="text/csv",
                 )
 
         except SolverUnsuccessful:
@@ -152,4 +163,6 @@ if n_jobs > 0:
             n_jobs = 0
 
         else:
-            st.info("Please contact gfluz94@gmail.com for any further explanations or adjustments! 😃")
+            st.info(
+                "Please contact gfluz94@gmail.com for any further explanations or adjustments! 😃"
+            )
