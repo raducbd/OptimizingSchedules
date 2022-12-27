@@ -39,5 +39,15 @@ Folder where all unit tests are located.
 Project folder structure, where all classes and methods are contained.
 
 ```sh
-
+scheduler
+├── __init__.py
+├── manufacturing
+│   ├── __init__.py
+│   ├── job.py
+│   └── task.py
+├── scheduling.py
+└── utils
+    ├── __init__.py
+    ├── errors.py
+    └── logging.py
 ```
